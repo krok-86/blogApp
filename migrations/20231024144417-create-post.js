@@ -9,16 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      title: {
-        type: Sequelize.STRING
-      },
-      topic: {
-        type: Sequelize.STRING
-      },
-      text: {
-        type: Sequelize.STRING
-      },
-      author: {
+      post: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -30,6 +21,21 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
+
+    await queryInterface.addColumn(
+      'posts', // name of Source model
+      'author', // name of the key we're adding 
+      {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users', // name of Target model
+          key: 'id', // key in Target model that we're referencing
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      }
+    );
+
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('posts');
