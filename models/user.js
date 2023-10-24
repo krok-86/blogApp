@@ -2,7 +2,6 @@
 const {
   Model
 } = require('sequelize');
-const post = require('./post');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -11,24 +10,12 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.belongsTo(models.role, {
-        foreignKey: 'roleValue',
-      });
-      User.hasMany(models.post, {
-        foreignKey: 'owner',
-        onDelete: 'CASCADE',
-      });
-      User.hasMany (models.comment, {
-        as: 'aythor',
-        foregnKey: 'userID',
-        
-      });
+      // define association here
     }
   }
   User.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    email: DataTypes.STRING
+    name: DataTypes.STRING,
+    posts: DataTypes.STRING    
   }, {
     sequelize,
     modelName: 'User',
